@@ -1,52 +1,108 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace LabbUppgift
 {
     class Program
     {
+
+
         static void Main(string[] args)
         {
-           string NumberInString = "29535123p48723487597645723645";
+            string NumberInString = "29535123p48723487597645723645";
 
-            List<int> SavedNumbers = new List<int>();
+            List<ulong> SavedNumbers = new List<ulong>();
+            BigInteger Total = 0;
+            Console.ForegroundColor = ConsoleColor.White;
 
 
-
-
-            int TempStartValue = -1;
+            int SearchNumber;
             int Steps = 0;
-            int PlaceInString = 0;
+
+            string LetterSearch;
 
 
             for (int i = 0; i < NumberInString.Length; i++)
             {
-                
-                if (Char.IsNumber(NumberInString[i]) && TempStartValue != Convert.ToInt32((NumberInString[i].ToString())))
+
+                if (Char.IsDigit(NumberInString[i]))
                 {
-                    for (int j = i; j < NumberInString.Length - i; j++)
+                    SearchNumber = NumberInString.IndexOf(NumberInString[i], i + 1);
+                    if (SearchNumber > 0)
                     {
-                        TempStartValue = Convert.ToInt32((NumberInString[i].ToString()));
-                        Steps = 0;
+                        LetterSearch = NumberInString.Substring(i, SearchNumber + 1 - i);
+                    }
+                    else
+                    {
+                        LetterSearch = "";
+                    }
 
-                        PlaceInString = i;
+                    if (SearchNumber > 0 && ContainLetter(LetterSearch))
+                    {
+                        SavedNumbers.Add(ulong.Parse(NumberInString.Substring(i, SearchNumber + 1 - i)));
+                        Total += ulong.Parse(NumberInString.Substring(i, SearchNumber + 1 - i));
 
-                        if (Char.IsNumber(NumberInString[i]) && TempStartValue == Convert.ToInt32((NumberInString[i].ToString())))
-                        {
 
-                        }
+
+                        Console.Write(NumberInString.Substring(0, i));
+                        Console.ForegroundColor = ConsoleColor.DarkCyan;
+                        Console.Write(NumberInString.Substring(i, SearchNumber + 1 - i));
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine(NumberInString.Substring(SearchNumber + 1));
+
+
+
+
+
 
 
 
                     }
+
+
+
+
+
+
+
                 }
-               
+
 
                 Steps++;
 
             }
-            SavedNumbers.Add(Convert.ToInt32(NumberInString[0].ToString()));
+
+
+
+
+            Console.WriteLine($"Om man adderar alla utvalda sifferkombinationer så får man slutsumman: {Total}");
+            Console.ReadLine();
+
+
+
+
 
         }
+
+        static bool ContainLetter(string ToSearch)
+        {
+            for (int i = 0; i < ToSearch.Length; i++)
+            {
+                int NrTest = 0;
+                while (!int.TryParse(ToSearch[i].ToString(), out NrTest))
+                {
+                    return false;
+                }
+
+
+            }
+
+            return true;
+        }
+
+
+
+
     }
 }
