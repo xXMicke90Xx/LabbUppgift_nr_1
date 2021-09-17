@@ -10,42 +10,45 @@ namespace LabbUppgift
 
         static void Main(string[] args)
         {
-            string PreDeterment = "29535123p48723487597645723645";
-            string StringWithNumbers = "29535123p48723487597645723645";
-           
-            
-            string MenuChoice = "";
-            byte Choice = 0;
-            BigInteger Total = 0; //Räknar ihop totalen av allt som hittas
-            
-            int SearchIndex; // Indexen som blir slutpunkten för sökningen
-            string LetterSearch; // Kommer användas för att hitta bokstäver i strängen
+            string PreDeterment = "29535123p48723487597645723645"; // Default value to be used
+            string StringWithNumbers = "29535123p48723487597645723645"; // Will change according to user input
+
+
+
+            byte MenuChoice = 0;
+            BigInteger Total = 0; // Will contain all numbercombinations added
+
+            int SearchIndex; // Is used to return an index to search for or -1
+            string LetterSearch; // Is used to search for letters in the substring
 
             //--------------------------------------------------------------------------------------
-            //----------------------------/HuvudProgrammet/-----------------------------------------
+            //----------------------------/MenuChoices/-----------------------------------------
             //--------------------------------------------------------------------------------------
-            while (Choice != 4) 
+            while (MenuChoice != 4)
             {
-                
-                Choice = Menu();
-                if (Choice == 4)
-                    break;
-                if(Choice == 1)
+
+                MenuChoice = Menu();
+                switch (MenuChoice)
                 {
-                    StringWithNumbers = PreDeterment;
+                    case 1: //Predetermend
+                        break;
+                    case 2://User determend
+                        Console.Write("Mata in värde/sträng(OBS decimaltal kommer ej räknas som decimaler): ");
+                        StringWithNumbers = Console.ReadLine();
+                        break;
+                    case 3://Randomgenerated
+                        StringWithNumbers = RandomGenerator();
+                        break;
+                    case 4://Exit Application
+                        Environment.Exit(0);
+                        break;
+
                 }
-                if (Choice == 2)
-                {
-                    Console.WriteLine("Vänligen mata in din sträng: ");
-                    StringWithNumbers = Console.ReadLine();
-                    
-                }
-                if (Choice == 3)
-                {
-                    StringWithNumbers = RandomGenerator();
-                }
-                
-                
+
+                //-------------------------------------------------------------------------------------
+                //--------------------/MainProgram/----------------------------------------------------
+                //-------------------------------------------------------------------------------------
+
                 for (int i = 0; i < StringWithNumbers.Length; i++)
                 {
 
@@ -67,21 +70,17 @@ namespace LabbUppgift
                             Total += ulong.Parse(StringWithNumbers.Substring(i, SearchIndex + 1 - i));
 
 
-
+                            // This will print the currently checked substrings and numbers
                             Console.Write(StringWithNumbers.Substring(0, i));
-                            Console.ForegroundColor = ConsoleColor.DarkCyan;
+                            Console.ForegroundColor = ConsoleColor.DarkMagenta;
                             Console.Write(StringWithNumbers.Substring(i, SearchIndex + 1 - i));
                             Console.ForegroundColor = ConsoleColor.White;
                             Console.WriteLine(StringWithNumbers.Substring(SearchIndex + 1));
 
                         }
                     }
-
-
-
-
                 }
-
+                // Prints the added sum och all found numbers
                 Console.WriteLine("");
                 Console.WriteLine($"Om man adderar alla utvalda sifferkombinationer så får man slutsumman: {Total}");
                 Console.WriteLine("Vänligen Tryck på en knapp. . .");
@@ -89,13 +88,13 @@ namespace LabbUppgift
                 Total = 0;
                 Console.Clear();
 
-            } 
+            }
 
-        
-            
+
+
 
             //------------------------------------------------------------------------------------
-            //----------------------------/Slut på huvudprogrammet/-------------------------------
+            //----------------------------/End of Main program/-------------------------------
             //------------------------------------------------------------------------------------
 
 
@@ -103,7 +102,7 @@ namespace LabbUppgift
 
 
         }
-        //-----------/Letar efter tecken eller bokstäver i strängen/------------
+        //-----------/Search the string for letters/------------
         static bool ContainLetter(string ToSearch)
         {
             for (int i = 0; i < ToSearch.Length; i++)
@@ -120,44 +119,54 @@ namespace LabbUppgift
             return true;
         }
 
-        //-----------/Meny/---------------------
+        //-----------/Menu/---------------------
         static byte Menu()
         {
-            
-            byte MenuChoice = 0;
-            Console.WriteLine("Välkommen till AutoSorter 3000\n");
-            Console.WriteLine("Vänligen gör ett val");
+
+            byte MenuChoice = 20;
+           
             do
             {
-                
+                Console.WriteLine("Välkommen till AutoSorter 3000\n");
+                Console.WriteLine("Vänligen gör ett val\n");
                 Console.WriteLine("[1] Använd ett förbestämt värde");
                 Console.WriteLine("[2] Ändra förbestämt värde");
                 Console.WriteLine("[3] Använd ett slumpgenererat värde");
                 Console.WriteLine();
                 Console.WriteLine("[4] Avsluta Program");
 
-                while (!byte.TryParse(Console.ReadLine(), out MenuChoice) && MenuChoice > 5 && MenuChoice > 0)
+                while (!byte.TryParse(Console.ReadLine(), out MenuChoice) || MenuChoice >= 5 || MenuChoice <= 0)
                 {
-                    
-                        Console.Clear();
-                        Console.WriteLine("Vänligen ange ett korrekt alternativ!");
-                    
+
+                    Console.Clear();
+                    Console.WriteLine("Vänligen ange ett korrekt alternativ!");
+                    Console.WriteLine("Tryck på en knapp");
+                    Console.ReadLine();
+                    Console.Clear();
+                    break;
+
                 }
-                
-                    
-            } while (MenuChoice == 0);
-           
+
+                if (MenuChoice > 0 && MenuChoice < 5)
+                {
+                    break;
+                }
+
+
+            } while (true);
+
 
 
             return MenuChoice;
 
 
 
-            
+
         }
+        //-----------/Will randomgenerate numbers and length och the substrings and also random char caracter/----------
         static string RandomGenerator()
         {
-            Console.Write("Vänligen ange den minsta längden du vill ha (Minsta längden är minst 6 oavsett): ");
+            Console.Write("Vänligen ange den minsta längden du vill ha (Minsta längden är minst 5 oavsett): ");
             byte Length = 0;
             while (!byte.TryParse(Console.ReadLine(), out Length))
             {
@@ -169,27 +178,27 @@ namespace LabbUppgift
                 while (!byte.TryParse(Console.ReadLine(), out Length))
                 {
                     Console.WriteLine("Använd ENDAST SIFFROR som är MELLAN 1-70");
-                    
+
                 }
             }
-            
+
             string RandomGeneratedString = "";
             int SubString = 0; // Length of substrings
-            int RandomNumber = 0; //The numbers in the substring
+
 
             Random rnd = new Random();
 
             do
             {
-                SubString = rnd.Next(5, 16);
-               
+                SubString = rnd.Next(4, 16); // No use in lowering start value
+
                 for (int i = 0; i < SubString; i++)
                 {
-                    RandomNumber = rnd.Next(1, 10);
-                    RandomGeneratedString += RandomNumber.ToString();
+
+                    RandomGeneratedString += rnd.Next(1, 10).ToString();
 
                 }
-                RandomGeneratedString += (char)rnd.Next(65, 123);
+                RandomGeneratedString += (char)rnd.Next(65, 123); //Will always be added to break of sections of substrings, can be removed if neccecery
 
             } while (RandomGeneratedString.Length < Length);
             return RandomGeneratedString;
