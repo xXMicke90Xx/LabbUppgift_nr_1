@@ -31,13 +31,22 @@ namespace LabbUppgift
                 switch (MenuChoice)
                 {
                     case 1: //Predetermend
+                        Console.Clear();
+                        Console.WriteLine($"Förprogrammerad sträng : {PreDeterment} ");
+                        Console.WriteLine();
                         break;
                     case 2://User determend
                         Console.Write("Mata in värde/sträng(OBS decimaltal kommer ej räknas som decimaler): ");
                         StringWithNumbers = Console.ReadLine();
+                        Console.Clear();
+                        Console.WriteLine($"Din sträng blev: {StringWithNumbers}");
+                        Console.WriteLine();
                         break;
                     case 3://Randomgenerated
                         StringWithNumbers = RandomGenerator();
+                        Console.Clear();
+                        Console.WriteLine($"Den slumpgenererade strängen blev: {StringWithNumbers}");
+                        Console.WriteLine();
                         break;
                     case 4://Exit Application
                         Environment.Exit(0);
@@ -48,7 +57,7 @@ namespace LabbUppgift
                 //-------------------------------------------------------------------------------------
                 //--------------------/MainProgram/----------------------------------------------------
                 //-------------------------------------------------------------------------------------
-
+                
                 for (int i = 0; i < StringWithNumbers.Length; i++)
                 {
 
@@ -70,7 +79,7 @@ namespace LabbUppgift
                             Total += ulong.Parse(StringWithNumbers.Substring(i, SearchIndex + 1 - i));
 
 
-                            // This will print the currently checked substrings and numbers
+                            // This will print the currently checked and approved substrings and numbers
                             Console.Write(StringWithNumbers.Substring(0, i));
                             Console.ForegroundColor = ConsoleColor.DarkMagenta;
                             Console.Write(StringWithNumbers.Substring(i, SearchIndex + 1 - i));
@@ -80,7 +89,7 @@ namespace LabbUppgift
                         }
                     }
                 }
-                // Prints the added sum och all found numbers
+                // Prints the added sum of all numbers
                 Console.WriteLine("");
                 Console.WriteLine($"Om man adderar alla utvalda sifferkombinationer så får man slutsumman: {Total}");
                 Console.WriteLine("Vänligen Tryck på en knapp. . .");
@@ -163,6 +172,9 @@ namespace LabbUppgift
 
 
         }
+
+
+
         //-----------/Will randomgenerate numbers and length och the substrings and also random char caracter/----------
         static string RandomGenerator()
         {
@@ -198,7 +210,7 @@ namespace LabbUppgift
                     RandomGeneratedString += rnd.Next(1, 10).ToString();
 
                 }
-                RandomGeneratedString += (char)rnd.Next(65, 123); //Will always be added to break of sections of substrings, can be removed if neccecery
+                RandomGeneratedString += (char)rnd.Next(65, 123); //Will always be added to break of sections of substrings, can be removed if neccecery 
 
             } while (RandomGeneratedString.Length < Length);
             return RandomGeneratedString;
