@@ -70,7 +70,7 @@ namespace LabbUppgift
                             letterSearch = "";
                         }
 
-                        if (searchIndex > 0 && ContainLetter(letterSearch))
+                        if (searchIndex > 0 && !ContainLetter(letterSearch))
                         {
 
                             totalSumOfNumbers += ulong.Parse(userDefined.Substring(i, searchIndex + 1 - i));
@@ -90,7 +90,7 @@ namespace LabbUppgift
                 Console.WriteLine("");
                 Console.WriteLine($"Om man adderar alla utvalda sifferkombinationer så får man slutsumman: {totalSumOfNumbers}");
                 Console.WriteLine("Vänligen Tryck på en knapp. . .");
-                Console.ReadLine();
+                Console.ReadKey();
                 totalSumOfNumbers = 0;
                 Console.Clear();
 
@@ -111,13 +111,13 @@ namespace LabbUppgift
                 int NrTest = 0;
                 while (!int.TryParse(toSearch[i].ToString(), out NrTest))
                 {
-                    return false;
+                    return true;
                 }
 
 
             }
 
-            return true;
+            return false;
         }
 
         //-----------/Menu/---------------------
@@ -142,7 +142,7 @@ namespace LabbUppgift
                     Console.Clear();
                     Console.WriteLine("Vänligen ange ett korrekt alternativ!");
                     Console.WriteLine("Tryck på en knapp");
-                    Console.ReadLine();
+                    Console.ReadKey();
                     Console.Clear();
                     break;
 
