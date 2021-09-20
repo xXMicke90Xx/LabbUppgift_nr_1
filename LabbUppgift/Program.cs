@@ -10,6 +10,10 @@ namespace LabbUppgift
 
         static void Main(string[] args)
         {
+            
+            Console.SetWindowSize(120, 40);
+            
+
             string preDefined = "29535123p48723487597645723645"; // Default value to be used
             string userDefined = "29535123p48723487597645723645"; // Will change according to user input
             byte menuChoice = 0;
@@ -59,22 +63,22 @@ namespace LabbUppgift
                 for (int i = 0; i < userDefined.Length; i++)
                 {
 
-                    if (Char.IsDigit(userDefined[i]))
+                    if (Char.IsDigit(userDefined[i])) //First character a number?
                     {
-                        searchIndex = userDefined.IndexOf(userDefined[i], i + 1);
+                        searchIndex = userDefined.IndexOf(userDefined[i], i + 1); //Find same number again? Else return -1
                         if (searchIndex > 0)
                         {
                             letterSearch = userDefined.Substring(i, searchIndex + 1 - i);
                         }
                         else
                         {
-                            letterSearch = "";
+                            letterSearch = "Not Found";
                         }
 
-                        if (searchIndex > 0 && !ContainLetter(letterSearch))
+                        if (searchIndex > 0 && !ContainLetter(letterSearch)) // 2 numbers found and not a letter inbetween?
                         {
 
-                            totalSumOfNumbers += ulong.Parse(userDefined.Substring(i, searchIndex + 1 - i));
+                            totalSumOfNumbers += BigInteger.Parse(userDefined.Substring(i, searchIndex + 1 - i)); //Add accepted numbers to sum
 
 
                             // This will print the currently checked and approved substrings and numbers
@@ -88,7 +92,7 @@ namespace LabbUppgift
                     }
                 }
                 // Prints the added sum of all numbers
-                Console.WriteLine("");
+                Console.WriteLine();
                 Console.WriteLine($"Om man adderar alla utvalda sifferkombinationer så får man slutsumman: {totalSumOfNumbers}");
                 Console.WriteLine("Vänligen Tryck på en knapp. . .");
                 Console.ReadKey();
@@ -104,7 +108,7 @@ namespace LabbUppgift
         }
 
 
-        //-----------/Search the string for letters/------------
+        //-----------/Search the substring for letters/------------
         static bool ContainLetter(string toSearch)
         {
             for (int i = 0; i < toSearch.Length; i++)
@@ -156,46 +160,41 @@ namespace LabbUppgift
 
 
             } while (true);
-
-
-
+            
             return menuChoice;
-
-
-
-
         }
 
-
-
-        //-----------/Will randomgenerate numbers and length och the substrings and also random char caracter/----------
+        //-----------/Will randomgenerate numbers and length and the substrings and also random char caracter/----------
         static string RandomGenerator()
         {
             Console.Write("Vänligen ange den minsta längden du vill ha (Minsta längden är minst 5 oavsett): ");
             byte Length = 0;
             while (!byte.TryParse(Console.ReadLine(), out Length))
             {
+                Console.Clear();
                 Console.WriteLine("Vänligen använd endast siffror (1-70): ");
             }
             while (Length > 70)
             {
+                Console.Clear();
                 Console.WriteLine("Vänligen använd inte ett störe tal än 70");
                 while (!byte.TryParse(Console.ReadLine(), out Length))
                 {
+                    Console.Clear();
                     Console.WriteLine("Använd ENDAST SIFFROR som är MELLAN 1-70");
 
                 }
             }
 
             string randomStringGenerated = "";
-            int subString = 0; // Length of substrings
+          
 
 
             Random rnd = new Random();
 
             do
             {
-                subString = rnd.Next(4, 16); // No use in lowering start value
+               int subString = rnd.Next(4, 16); // No use in lowering start value
 
                 for (int i = 0; i < subString; i++)
                 {
@@ -208,8 +207,5 @@ namespace LabbUppgift
             } while (randomStringGenerated.Length < Length);
             return randomStringGenerated;
         }
-
-
-
     }
 }
