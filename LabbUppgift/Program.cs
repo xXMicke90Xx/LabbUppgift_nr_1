@@ -29,6 +29,7 @@ namespace LabbUppgift
                 {
                     case 1: //Predetermend
                         Console.Clear();
+                        userDefined = preDefined;
                         Console.WriteLine($"Förprogrammerad sträng : {preDefined} ");
                         Console.WriteLine();
                         break;
