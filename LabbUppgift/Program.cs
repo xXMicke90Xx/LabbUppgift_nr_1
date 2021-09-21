@@ -136,7 +136,7 @@ namespace LabbUppgift
                 Console.WriteLine("Välkommen till AutoSorter 3000\n");
                 Console.WriteLine("Vänligen gör ett val\n");
                 Console.WriteLine("[1] Använd ett förbestämt värde");
-                Console.WriteLine("[2] Ändra förbestämt värde");
+                Console.WriteLine("[2] Ange ett eget värde ");
                 Console.WriteLine("[3] Använd ett slumpgenererat värde");
                 Console.WriteLine();
                 Console.WriteLine("[4] Avsluta Program");
