@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
+
 using System.Numerics;
+using System.Text.RegularExpressions;
 
 namespace LabbUppgift
 {
@@ -75,7 +76,7 @@ namespace LabbUppgift
                             letterSearch = "Not Found";
                         }
 
-                        if (searchIndex > 0 && !ContainLetter(letterSearch)) // 2 numbers found and not a letter inbetween?
+                        if (searchIndex > 0 && ContainLetter(letterSearch)) // 2 numbers found and not a letter inbetween?
                         {
 
                             totalSumOfNumbers += BigInteger.Parse(userDefined.Substring(i, searchIndex + 1 - i)); //Add accepted numbers to sum
@@ -111,18 +112,9 @@ namespace LabbUppgift
         //-----------/Search the substring for letters/------------
         static bool ContainLetter(string toSearch)
         {
-            for (int i = 0; i < toSearch.Length; i++)
-            {
-                int NrTest = 0;
-                while (!int.TryParse(toSearch[i].ToString(), out NrTest))
-                {
-                    return true;
-                }
-
-
-            }
-
-            return false;
+            Regex subString = new Regex("^[0-9]{1,2000000}$");
+            bool IsLetter = subString.IsMatch(toSearch);
+            return IsLetter;
         }
 
         //-----------/Menu/---------------------
